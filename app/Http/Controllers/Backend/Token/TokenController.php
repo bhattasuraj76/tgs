@@ -23,7 +23,7 @@ class TokenController extends Controller
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            return Datatables::of($this->model->latest()->get())
+            return Datatables::of($this->model->latest()->orderBy('id', 'desc')->get())
                 ->addColumn('department_name', function ($data) {
                     return $data->getDepartmentNameAttribute();
                 })

@@ -50,7 +50,7 @@
                         <th>ID</th>
                         <th>Department</th>
                         <th>Date</th>
-                        <th>Time Slot</th>
+                        <th>Time</th>
                         <th>Customer Name</th>
                         <th>Customer Phone</th>
                         <th>Status</th>

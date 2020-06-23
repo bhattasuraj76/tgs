@@ -21,7 +21,7 @@ class TGSSeeder extends Seeder
         ]);
 
 
-        
+
         $days = ['sunday', 'monday', 'tuesday', 'thursday', 'friday'];
         foreach ($departments as $depatment) {
             //create working days for each department
@@ -41,11 +41,11 @@ class TGSSeeder extends Seeder
         }
 
         //create tokens for departments
-        for ($i = 0; $i <= 20; $i++) {
+        for ($i = 0; $i <= 2; $i++) {
             \App\Models\Token::insert([
                 'department_id' => $departments[rand(0, 1)]->id,
                 'date' => date('Y-m-d', strtotime("tomorrow")),
-                'time_slot' => '10:00 - 10:30',
+                'time_slot' => '14:00',
                 'first_name' => 'John',
                 'last_name' => 'Doe',
                 'email' => 'john@doe.com',
@@ -54,11 +54,9 @@ class TGSSeeder extends Seeder
         }
 
         //create holidays 
-        for ($i = 0; $i <= 20; $i++) {
-            \App\Models\Holiday::insert([
-                'date' => date('Y-m-d', strtotime("Friday this week")),
-               'remarks' => 'National Holiday Day'
-            ]);
-        }
+        \App\Models\Holiday::insert([
+            'date' => date('Y-m-d', strtotime("Friday this week")),
+            'remarks' => 'National Holiday Day'
+        ]);
     }
 }
