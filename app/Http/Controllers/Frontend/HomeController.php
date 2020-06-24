@@ -41,12 +41,11 @@ class HomeController extends Controller
         $department = $this->departmentModel->find($request->department_id);
         $holidays =  $this->holidayModel->pluck('date')->toArray();
         $preferredDate = $request->date;
-
         if (in_array($preferredDate, $holidays)) {
             return response()->json(['resp' => 0, 'message' => 'Please select another date', 'errors' => ['date' => 'Please select another date']]);
         }
 
-        //check if preferred weekday is not one of wokring weekdays
+        //check if preferred weekday is not one of working weekdays
         $weekMap = [
             0 => 'sunday',
             1 => 'monday',
@@ -63,12 +62,19 @@ class HomeController extends Controller
             return response()->json(['resp' => 0, 'message' => 'Please select another date', 'errors' => ['date' => 'Please select another date']]);
         }
 
+        //check if maximum quotas has reached
+        $tokensCount =  $this->tokenModel->whereDate('date', $request->date)->where('status', 'valid')->count();
+        $workingDay = $department->workingdays()->where('day', $preferdWeekday)->first();
+        if ($tokensCount >= $workingDay->max_quotas) {
+            return response()->json(['resp' => 0, 'message' => 'Sorry, max quotas has reached.']);
+        }
+
         //check if preferred time is during break time or not during office hours
         $preferredTime =  $request->time;
         if (
-            $this->checkIfPreferredTimeDuringBreakTime($preferredTime, $department, $preferdWeekday)
+            $this->checkIfPreferredTimeDuringBreakTime($preferredTime, $workingDay, $preferdWeekday)
             ||
-            !$this->checkIfPreferredTimeDuringWorkingHours($preferredTime, $department, $preferdWeekday)
+            !$this->checkIfPreferredTimeDuringWorkingHours($preferredTime, $workingDay, $preferdWeekday)
         ) {
             return response()->json(['resp' => 0, 'message' => 'Please select another time', 'errors' => ['time' => 'Please select another date']]);
         }
@@ -95,17 +101,17 @@ class HomeController extends Controller
         return view('frontend.home', compact('departments'));
     }
 
-    public function checkifPreferredTimeDuringBreakTime($preferredTime, $department, $preferdWeekday)
+    public function checkifPreferredTimeDuringBreakTime($preferredTime, $workingDay, $preferdWeekday)
     {
-        $breakStartTime =  $department->workingdays()->where('day', $preferdWeekday)->first()->break_start_time;
-        $breakEndTime =  $department->workingdays()->where('day', $preferdWeekday)->first()->break_end_time;
+        $breakStartTime =  $workingDay->break_start_time;
+        $breakEndTime =  $workingDay->break_end_time;
         return $preferredTime >= $breakStartTime && $preferredTime <= $breakEndTime;
     }
 
-    public function checkIfPreferredTimeDuringWorkingHours($preferredTime, $department, $preferdWeekday)
+    public function checkIfPreferredTimeDuringWorkingHours($preferredTime, $workingDay, $preferdWeekday)
     {
-        $officeStartTime =  $department->workingdays()->where('day', $preferdWeekday)->first()->office_start_time;
-        $officeEndTime =  $department->workingdays()->where('day', $preferdWeekday)->first()->office_end_time;
+        $officeStartTime =  $workingDay->office_start_time;
+        $officeEndTime =  $workingDay->office_end_time;
         return $preferredTime >= $officeStartTime && $preferredTime <= $officeEndTime;
     }
 
