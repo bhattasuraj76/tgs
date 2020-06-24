@@ -1,25 +1,6 @@
 @extends('frontend.master.master')
-
+@section('title', $pageTitle)
 @section('content')
-<header class="">
-	<div class="container">
-		<img src="{{asset('public/frontend/img/nepal-government.png')}}" alt="Nepal Government">
-		<div>
-			<h3>
-				नेपाल सरकार
-			</h3>
-			<h4>
-				गृह मन्त्रालय
-			</h4>
-			<h2>
-				जिल्ला प्रसासन कार्यालय
-			</h2>
-			<span>
-				काठमाडौँ
-			</span>
-		</div>
-	</div>
-</header>
 
 <main class="main-container">
 	<div class="container">
@@ -27,15 +8,15 @@
 			<form action="{{route('token.create')}}" method="post" class="token-form js-token-form">
 				@csrf
 				<h2>
-					पालोे निस्सा
+					पालो निस्सा
 				</h2>
 				<div class="form-group">
-					<label for="first_name">सेवागाहीको नाम: </label>
-					<input type="text" class="form-control" name="first_name" placeholder="सेवागाहीको नाम" required>
+					<label for="first_name">सेवाग्रहिको नाम: </label>
+					<input type="text" class="form-control" name="first_name" placeholder="सेवाग्रहिको नाम" required>
 				</div>
 				<div class="form-group">
-					<label for="last_name">सेवागाहीको थर: </label>
-					<input type="text" class="form-control" name="last_name" placeholder="सेवागाहीको नाम" required>
+					<label for="last_name">सेवाग्रहिको थर: </label>
+					<input type="text" class="form-control" name="last_name" placeholder="सेवाग्रहिको थर" required>
 				</div>
 				<div class="form-group">
 					<label for="last_name">ईमेल: </label>
@@ -54,12 +35,12 @@
 					</select>
 				</div>
 				<div class="form-group">
-					<label for="date">पालो मिति: </label>
-					<input type="text" class="form-control calendar" name="date" id="date" placeholder="मितिः" required>
+					<label for="neapliDate">पालो मिति: </label>
+					<input type="text" class="form-control nepali-calendar" name="date" id="nepaliDate" value="" placeholder="मितिः" required>
 				</div>
 				<div class="form-group">
 					<label for="prefered_time">समयः</label>
-					<input type="time" class="form-control" name="time" id="time" placeholder="समयः" required>
+					<input type="text" class="form-control timepicker" name="time" id="time" placeholder="समयः" required>
 				</div>
 				<div class="form-group">
 					<button class="btn btn-blue js-token-form-submit-btn">
@@ -71,49 +52,65 @@
 	</div>
 </main>
 
-@endsection
+<footer style="background:#fff; padding:10px;">
+	<div class="container text-center">
+		<h3><a href="{{route('search')}}">Search your tokens</a></h3>
+	</div>
+	</header>
+	@endsection
 
-@section('after-scripts')
-<script>
-	jQuery('.js-token-form').on('submit', function(e) {
-		e.preventDefault();
-		emptyErrorMsg();
-		jQuery('.js-token-form-submit-btn').html('Wait.....');
+	@section('after-scripts')
+	<script>
+		//calcuate english date on change date
+		// jQuery('#date').change(function() {
+		// 	console.log(jQuery('#date').val());
+		// 	jQuery('#englishDate').val(BS2AD(jQuery('#date').val()));
 
-		let formUrl = "{{route('token.create')}}";
-		let formData = $(this).serialize();
+		// });
 
-		//perform ajax request to create token
-		jQuery.ajax({
-			url: formUrl,
-			type: "post",
-			data: formData,
-			success: function(data) {
-				if (typeof data.resp === undefined) return;
+		console.log(jQuery('#nepaliDate'));
+		//handle form submit
+		jQuery('.js-token-form').on('submit', function(e) {
+			e.preventDefault();
+			emptyErrorMsg();
+			jQuery('.js-token-form-submit-btn').html('Wait.....');
 
-				if (data.resp == 0) {
-					swal({
-						'title': "Error",
-						'icon': "error",
-						"text": data.message
-					});
-					//show validation errors if present
-					if (!$.isEmptyObject(data.errors)) printErrorMsg(data.errors);
-				} else {
-					swal({
-						'title': "Success",
-						'icon': "success",
-						"text": data.message
-					});
+			let formUrl = "{{route('token.create')}}";
+			let formData = new FormData($(this).get(0));
+			formData.append('english_date', BS2AD(jQuery('#nepaliDate').val()));
+			//perform ajax request to create token
+			jQuery.ajax({
+				processData: false,
+				contentType: false,
+				url: formUrl,
+				type: "post",
+				data: formData,
+				success: function(data) {
+					if (typeof data.resp === undefined) return;
+
+					if (data.resp == 0) {
+						swal({
+							'title': "Error",
+							'icon': "error",
+							"text": data.message
+						});
+						//show validation errors if present
+						if (!$.isEmptyObject(data.errors)) printErrorMsg(data.errors);
+					} else {
+						swal({
+							'title': "Success",
+							'icon': "success",
+							"text": data.message
+						});
+					}
+				},
+				error: function(err) {
+					console.log(err);
+				},
+				complete: function() {
+					jQuery('.js-token-form-submit-btn').html('Submit');
 				}
-			},
-			error: function(err) {
-				console.log(err);
-			},
-			complete: function() {
-				jQuery('.js-token-form-submit-btn').html('Submit');
-			}
+			});
 		});
-	});
-</script>
-@endsection
+	</script>
+	@endsection

@@ -11,6 +11,8 @@
 <script src="{{asset('public/frontend/js/jquery-3.3.1.min.js') }}"></script>
 <script src="{{asset('public/frontend/js/jquery-ui.js') }}"></script>
 <script src="{{asset('public/frontend/js/bootstrap.bundle.min.js') }}"></script>
+<script src="{{asset('public/frontend/js/nepali.datepicker.min.js') }}"></script>
+<script src="{{asset('public/frontend/js/jquery.timepicker.min.js') }}"></script>
 <script src="{{asset('public/frontend/js/jquery.validate.js')}}"></script>
 <script src="{{asset('public/frontend/js/sweetalert.min.js')}}"></script>
 

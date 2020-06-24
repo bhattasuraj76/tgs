@@ -1,14 +1,41 @@
 !(function loadDatepicker() {
-    jQuery(".calendar").datepicker({
+    $(".calendar").datepicker({
         autoclose: true,
         startDate: new Date(),
         todayHighlight: true,
         minDate: 0,
     });
 
-    jQuery.datepicker.setDefaults({
+    $.datepicker.setDefaults({
         dateFormat: "yy-mm-dd",
     });
+
+    // let startDate = formatDate(new Date());
+    // let startDateNepali = AD2BS(startDate);
+    // console.log(startDateNepali);
+
+    $(".nepali-calendar").nepaliDatePicker({
+        npdMonth: true,
+        npdYear: true,
+        npdYearCount: 1,
+        disableDaysBefore: '1',
+		disableDaysAfter: '10',
+        autoclose: true,
+    });
+})();
+
+!(function loadTimepicker() {
+$(".timepicker").timepicker({
+    timeFormat: "h:mm p",
+    interval: 30,
+    minTime: "10",
+    maxTime: "6:00pm",
+    defaultTime: "11",
+    startTime: "10:00",
+    dynamic: false,
+    dropdown: true,
+    scrollbar: true,
+});
 })();
 
 //print error messages under form fields
@@ -81,4 +108,17 @@ function emptyErrorMsg() {
     $(".error-text").each(function () {
         $(this).remove();
     });
+}
+
+//foramt date
+function formatDate(date) {
+    var d = new Date(date),
+        month = "" + (d.getMonth() + 1),
+        day = "" + d.getDate(),
+        year = d.getFullYear();
+
+    if (month.length < 2) month = "0" + month;
+    if (day.length < 2) day = "0" + day;
+
+    return [year, month, day].join("-");
 }

@@ -23,11 +23,12 @@ class HomeController extends Controller
 
     public function index()
     {
+        $pageTitle = config('website_default.site_name') . ' | Search Tokens';
         $departments = $this->departmentModel
             ->where('status', 'active')
             ->orderBy('position', 'desc')
             ->get();
-        return view('frontend.home', compact('departments'));
+        return view('frontend.home', compact('departments', 'pageTitle'));
     }
 
     public function createToken(Request $request)
@@ -43,7 +44,7 @@ class HomeController extends Controller
         $holidays =  $this->holidayModel->pluck('date')->toArray();
         $preferredDate = $request->date;
         if (in_array($preferredDate, $holidays)) {
-            return response()->json(['resp' => 0, 'message' => 'Please select another date', 'errors' => ['date' => 'Please select another date']]);
+            return response()->json(['resp' => 0, 'message' => 'Please select another date', 'errors' => ['date' => 'Please select another dates']]);
         }
 
         //check if preferred weekday is not one of working weekdays
@@ -56,7 +57,7 @@ class HomeController extends Controller
             5 => 'friday',
             6 => 'saturday',
         ];
-        $dayOfTheWeek = Carbon::parse($request->date)->dayOfWeek;
+        $dayOfTheWeek = Carbon::parse($request->english_date)->dayOfWeek;  //use english_date becuse nepali date weekday not valid
         $preferdWeekday = $weekMap[$dayOfTheWeek];
         $days =  $department->workingdays()->pluck('day')->toArray();
         if (!in_array($preferdWeekday, $days)) {
@@ -71,7 +72,7 @@ class HomeController extends Controller
         }
 
         //check if preferred time is during break time or not during office hours
-        $preferredTime =  $request->time;
+        $preferredTime =  date('H:i', strtotime($request->time)); //use 24 hr format for time operations(compare and store)
         if (
             $this->checkIfPreferredTimeDuringBreakTime($preferredTime, $workingDay, $preferdWeekday)
             ||
@@ -89,7 +90,7 @@ class HomeController extends Controller
                 'email' => $request->email,
                 'department_id' => $request->department_id,
                 'date' => $request->date,
-                'time_slot' => $request->time
+                'time_slot' => $preferredTime
             ];
 
             $token = $this->tokenModel->create($attributes);
@@ -99,7 +100,6 @@ class HomeController extends Controller
         } catch (\Exception $e) {
             return response()->json(['resp' => 0, 'message' => $e->getMessage()]);
         }
-        return view('frontend.home', compact('departments'));
     }
 
     public function checkifPreferredTimeDuringBreakTime($preferredTime, $workingDay, $preferdWeekday)
@@ -124,7 +124,7 @@ class HomeController extends Controller
             'last_name' => 'required',
             'email' => 'required|email',
             'phone' => 'required|numeric|min:6',
-            'date' => 'required|date|date_format:Y-m-d'
+            'date' => 'required|date|date_format:Y-m-d',
         ];
 
         $messages = [
@@ -133,7 +133,7 @@ class HomeController extends Controller
             'last_name.*' => 'Last name is required',
             'email.*' => 'Email is required',
             'phone.*' => 'Please enter valid phone number',
-            'date' => 'Please select date'
+            'date.required' => 'Please select date'
         ];
         return Validator::make($data, $rules, $messages);
     }

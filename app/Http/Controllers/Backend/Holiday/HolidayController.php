@@ -61,7 +61,7 @@ class HolidayController extends Controller
 
             $attributes = $request->all();
             $holiday->update($attributes);
-            return redirect()->back()->withErrors(['alert-success' => 'Successfully Updated']);
+            return redirect($this->redirectUrl)->withErrors(['alert-success' => 'Successfully Updated']);
         } catch (\Exception $e) {
             return redirect()->back()->withErrors(['alert-danger' => $e->getMessage()]);
         }

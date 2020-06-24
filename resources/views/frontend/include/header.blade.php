@@ -34,6 +34,8 @@
   <!-- styles -->
   <link rel="stylesheet" href="{{asset('public/frontend/css/bootstrap.css')}}">
   <link rel="stylesheet" href="{{asset('public/frontend/css/jquery-ui.css')}}">
+  <link rel="stylesheet" href="{{asset('public/frontend/css/nepali.datepicker.min.css')}}">
+  <link rel="stylesheet" href="{{asset('public/frontend/css/jquery.timepicker.min.css')}}">
   <link rel="stylesheet" href="{{asset('public/frontend/css/style.css')}}">
 
   <!-- import styles from inner pages -->
@@ -43,5 +45,23 @@
 </head>
 
 <body>
-
+  <header class="" style="background:#fff; padding:10px;">
+    <div class="container">
+      <a href="{{route('home')}}"><img src="{{asset('public/frontend/img/nepal-government.png')}}" alt="Nepal Government"></a>
+      <div>
+        <h3>
+          नेपाल सरकार
+        </h3>
+        <h4>
+          गृह मन्त्रालय
+        </h4>
+        <h2>
+          जिल्ला प्रसासन कार्यालय
+        </h2>
+        <span>
+          काठमाडौँ
+        </span>
+      </div>
+    </div>
+  </header>
   @endsection

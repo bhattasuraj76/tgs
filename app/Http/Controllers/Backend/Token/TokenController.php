@@ -30,6 +30,9 @@ class TokenController extends Controller
                 ->addColumn('name', function ($data) {
                     return $data->getNameAttribute();
                 })
+                ->addColumn('pretty_time_slot', function ($data) {
+                    return $data->getPrettyTimeSlotAttribute();
+                })
                 ->addColumn('action', function ($data) {
                     $showUrl =  route('admin.token.show', ['token' => $data->id]);
                     $destoryUrl =  route('admin.token.destroy', ['token' => $data->id]);

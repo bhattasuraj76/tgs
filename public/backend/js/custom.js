@@ -159,6 +159,28 @@ function loadDatepicker() {
         orientation: "bottom",
         format: "yyyy-mm-dd",
     });
+
+  $(".nepali-calendar").nepaliDatePicker({
+      npdMonth: true,
+      npdYear: true,
+      npdYearCount: 1,
+      disableDaysBefore: "1",
+      autoclose: true,
+  });
+}
+
+function loadTimepicker() {
+   $(".timepicker").timepicker({
+       timeFormat: "h:mm p",
+       interval: 30,
+       minTime: "10",
+       maxTime: "6:00pm",
+       defaultTime: "11",
+       startTime: "10:00",
+       dynamic: false,
+       dropdown: true,
+       scrollbar: true,
+   });
 }
 
 //load select2

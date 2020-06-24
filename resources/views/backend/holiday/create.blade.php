@@ -30,7 +30,7 @@
                 <div class="form-group row">
                     <label for="date" class="col-lg-2 col-form-label">Date <span class="text-danger">*</span></label>
                     <div class="col-lg-10">
-                        <input type="text" name="date" class="form-control {{ $errors->has('date') ? ' is-invalid' : '' }} calendar" id="date" value="{{ old('date') }}" required>
+                        <input type="text" name="date" class="form-control {{ $errors->has('date') ? ' is-invalid' : '' }} nepali-calendar" id="date" value="{{ old('date') }}" autocomplete="off" required>
                     </div>
                 </div>
                 <hr>
@@ -45,11 +45,11 @@
                     <label class="col-lg-2 col-form-label">Status </label>
                     <div class="col-lg-10">
                         <label class="radio-inline">
-                            <input type="radio" name="status" value="published" @if(old('status', "published")=='published' ){{"checked"}}@endif>
+                            <input type="radio" name="status" value="published" @if(old('status', "published" )=='published' ){{"checked"}}@endif>
                             Publish
                         </label>
                         <label class="radio-inline">
-                            <input type="radio" name="status" value="draft" @if(old('status') == 'draft' ){{"checked"}}@endif>
+                            <input type="radio" name="status" value="draft" @if(old('status')=='draft' ){{"checked"}}@endif>
                             Draft
                         </label>
                     </div>
