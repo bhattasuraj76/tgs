@@ -117,8 +117,8 @@
                 "orderable": true
             },
             {
-                "data": "time_slot",
-                "name": "time_slot",
+                "data": "pretty_time_slot",
+                "name": "pretty_time_slot",
                 "orderable": true
             },
             {

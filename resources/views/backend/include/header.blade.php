@@ -5,7 +5,7 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title> {{config('website_default.site_name')}} | @yield('title', 'Admin Dashboard')</title>
-  <link rel="icon" type="images/png" href="{{asset('public/frontend/img/king-icon.png')}}" />
+  <link rel="icon" type="images/png" href="{{asset('public/frontend/img/nepal-government.png')}}" />
   <meta name="csrf-token" content="{{ csrf_token() }}">
 
   <!-- google fonts -->
@@ -28,6 +28,8 @@
   <link rel="stylesheet" href="{{asset('public/backend/vendor/select2/select2.min.css')}}">
   <!-- datepicker -->
   <link rel="stylesheet" href="{{asset('public/backend/vendor/bootstrap-datepicker/bootstrap-datepicker.min.css')}}">
+  <!-- neapli datepicker -->
+  <link rel="stylesheet" href="{{asset('public/backend/vendor/nepali-datepicker/nepali.datepicker.min.css')}}">
   <!-- global common styles -->
   <link rel="stylesheet" href="{{asset('public/backend/css/common/main.bundle.css')}}">
   <!-- layout type -->

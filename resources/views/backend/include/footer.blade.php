@@ -32,6 +32,8 @@
 
     <script src="{{asset('public/backend/vendor_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js')}}"></script>
 
+    <script src="{{asset('public/backend/vendor/nepali-datepicker/nepali.datepicker.min.js')}}"></script>
+
     <script src="{{ asset('public/backend/ckeditor/ckeditor.js') }}"></script>
 
     <script src="{{asset('vendor/laravel-filemanager/js/lfm.js')}}"></script>

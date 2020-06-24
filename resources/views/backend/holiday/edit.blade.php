@@ -25,12 +25,14 @@
     <div class="card">
         @include('errors.errors')
         <div class="card-body">
-            <form action="{{route('admin.holiday.store')}}" method="POST" enctype="multipart/form-data">
+            <form action="{{route('admin.holiday.update', $data->id)}}" method="POST">
                 @csrf
+                @method('put')
+
                 <div class="form-group row">
                     <label for="date" class="col-lg-2 col-form-label">Date <span class="text-danger">*</span></label>
                     <div class="col-lg-10">
-                        <input type="text" name="date" class="form-control {{ $errors->has('date') ? ' is-invalid' : '' }} calendar" id="date" value="{{ $data->date }}" required>
+                        <input type="text" name="date" class="form-control {{ $errors->has('date') ? ' is-invalid' : '' }} nepali-calendar" id="date" value="{{ $data->date }}" autocomplete="off" required>
                     </div>
                 </div>
                 <hr>

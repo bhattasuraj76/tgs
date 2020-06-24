@@ -44,7 +44,7 @@ class TGSSeeder extends Seeder
         for ($i = 0; $i <= 2; $i++) {
             \App\Models\Token::insert([
                 'department_id' => $departments[rand(0, 1)]->id,
-                'date' => date('Y-m-d', strtotime("tomorrow")),
+                'date' => "2077-03-10",
                 'time_slot' => '14:00',
                 'first_name' => 'John',
                 'last_name' => 'Doe',
@@ -55,7 +55,7 @@ class TGSSeeder extends Seeder
 
         //create holidays 
         \App\Models\Holiday::insert([
-            'date' => date('Y-m-d', strtotime("Friday this week")),
+            'date' => "2077-03-12",
             'remarks' => 'National Holiday Day'
         ]);
     }

@@ -37,6 +37,11 @@ class Token extends Model
         return (new Carbon($value))->format('Y-m-d');
     }
 
+    public function getPrettyTimeSlotAttribute()
+    {
+        return date("g:i a", strtotime($this->attributes['time_slot']));
+    }
+
     public function getNameAttribute()
     {
         return $this->attributes['first_name'] . " " . $this->attributes['last_name'];
