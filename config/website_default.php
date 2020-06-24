@@ -1,11 +1,11 @@
 <?php
 return [
-    'site_owner' => 'Ananomynous',
+    'site_owner' => 'Genesis Web Tech',
     'site_name' => 'Token Generation System',
-    'company_name' => 'TGS Pvt. Ltd.',
+    'company_name' => 'Genesis Web Tech',
     'time_zone' => 'Asia/Katmandu',
-    'primary_email' => 'surajvws@gmail.com',
-    'secondary_email' => 'contact@tgs.com',
+    'primary_email' => 'contact@genesiswtech.com',
+    'secondary_email' => 'sales@genesiswtech.com',
     'phone1' => '',
     'mobile1' => '',
     'address' => 'Kathmandu, Nepal',
@@ -18,7 +18,7 @@ return [
     'twitter_link' => '',
     'instagram_link' => '',
     'youtube_link' => '',
-    'linkedin_link'=>'',
+    'linkedin_link' => '',
     'pinterest_link' => '',
     'meta_title' => 'Token Generation System'
 ];

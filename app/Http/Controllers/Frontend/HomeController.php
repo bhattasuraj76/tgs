@@ -18,6 +18,7 @@ class HomeController extends Controller
         $this->departmentModel = new Department();
         $this->holidayModel = new Holiday();
         $this->tokenModel = new Token();
+
     }
 
     public function index()
@@ -76,7 +77,7 @@ class HomeController extends Controller
             ||
             !$this->checkIfPreferredTimeDuringWorkingHours($preferredTime, $workingDay, $preferdWeekday)
         ) {
-            return response()->json(['resp' => 0, 'message' => 'Please select another time', 'errors' => ['time' => 'Please select another date']]);
+            return response()->json(['resp' => 0, 'message' => 'Please select another time', 'errors' => ['time' => 'Please select another time']]);
         }
 
 
